@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#1a7a52;--green-deep:#0d4d33;--ocean:#1a4d7a;--sand:#f5f0e8;
+  --ink:#12120f;--muted:#5a5a52;--border:rgba(26,122,82,0.2);
+  --gold:#c49a2a;--gold-light:#fdf6e3;
+}
+body{font-family:'Inter',sans-serif;background:var(--sand);color:var(--ink);min-height:100vh}
+
+.hero{background:var(--green-deep);padding:80px 40px 64px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(26,122,82,0.4) 0%,transparent 60%),radial-gradient(ellipse at 80% 30%,rgba(26,77,122,0.3) 0%,transparent 60%)}
+.globe-wrap{width:90px;height:90px;margin:0 auto 24px;position:relative;z-index:1}
+.globe-wrap svg{width:100%;height:100%}
+.badge{display:inline-block;background:rgba(196,154,42,0.18);border:1px solid var(--gold);color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;padding:5px 16px;border-radius:2px;margin-bottom:22px;position:relative;z-index:1}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(40px,7vw,70px);font-weight:900;color:#fff;line-height:1.05;margin-bottom:10px;position:relative;z-index:1}
+.hero h1 span{color:var(--gold)}
+.slogan{font-family:'Playfair Display',serif;font-size:clamp(16px,2.5vw,22px);font-style:italic;color:rgba(255,255,255,.75);margin-bottom:14px;position:relative;z-index:1}
+.sub-slogan{font-size:14px;color:rgba(255,255,255,.5);margin-bottom:38px;position:relative;z-index:1;letter-spacing:.03em}
+.cta-group{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.btn-gold{background:var(--gold);color:var(--green-deep);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;letter-spacing:.08em;padding:14px 32px;border:none;border-radius:3px;cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(196,154,42,.35)}
+.btn-ghost{background:transparent;color:rgba(255,255,255,.85);font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.08em;padding:14px 32px;border:1px solid rgba(255,255,255,.3);border-radius:3px;cursor:pointer;text-decoration:none;transition:border-color .15s,color .15s}
+.btn-ghost:hover{border-color:rgba(255,255,255,.7);color:#fff}
+.faixa{height:6px;background:repeating-linear-gradient(90deg,var(--green) 0,var(--green) 12px,var(--ocean) 12px,var(--ocean) 24px,var(--gold) 24px,var(--gold) 36px,var(--green) 36px)}
+.section{padding:64px 40px;max-width:920px;margin:0 auto}
+.label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--green);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.label::before{content:'';display:block;width:24px;height:1px;background:var(--green)}
+h2{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,38px);font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:32px}
+.como-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.como-card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:24px;text-align:center;transition:border-color .2s}
+.como-card:hover{border-color:var(--green)}
+.como-card .ic{font-size:30px;margin-bottom:12px;display:block}
+.como-card h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--green-deep)}
+.como-card p{font-size:13px;color:var(--muted);line-height:1.65}
+.pub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pub-card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:20px;text-align:center}
+.pub-card .pub-icon{font-size:32px;margin-bottom:10px}
+.pub-card h3{font-size:15px;font-weight:500;color:var(--green-deep);margin-bottom:6px}
+.pub-card p{font-size:13px;color:var(--muted);line-height:1.55}
+.planos-sec{background:var(--green-deep);padding:72px 40px;color:#fff}
+.planos-inner{max-width:920px;margin:0 auto}
+.planos-sec .label{color:var(--gold)}
+.planos-sec .label::before{background:var(--gold)}
+.planos-sec h2{color:#fff}
+.planos-sec p.intro{font-size:15px;color:rgba(255,255,255,.65);margin-top:-20px;margin-bottom:36px;line-height:1.7}
+.planos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.plano{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;position:relative;transition:border-color .2s}
+.plano:hover{border-color:rgba(196,154,42,.5)}
+.plano.destaque{background:rgba(196,154,42,.1);border-color:var(--gold)}
+.plano .popular{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--green-deep);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;padding:4px 14px;border-radius:2px;white-space:nowrap}
+.plano-icon{font-size:28px}
+.plano h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff}
+.plano .preco{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--gold);margin-bottom:4px}
+.plano .desc{font-size:13px;color:rgba(255,255,255,.6);line-height:1.6}
+.plano-features{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.plano-features li{font-size:13px;color:rgba(255,255,255,.75);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.plano-features li::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0;margin-top:1px}
+.plano .btn-plano{margin-top:auto;background:transparent;border:1px solid rgba(255,255,255,.25);border-radius:4px;color:rgba(255,255,255,.8);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.07em;padding:11px;cursor:pointer;transition:all .2s;text-align:center}
+.plano.destaque .btn-plano{background:var(--gold);border-color:var(--gold);color:var(--green-deep)}
+.plano .btn-plano:hover{opacity:.85}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:12px}
+.faq-item{background:#e8e2d6;border:1px solid rgba(0,0,0,0.12);border-radius:6px;overflow:hidden}
+.faq-q{width:100%;background:#e8e2d6;border:none;text-align:left;padding:18px 24px;font-family:'Inter',sans-serif;font-size:15px;font-weight:600;color:#000;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.faq-q .arr{font-size:20px;font-weight:700;color:#000;transition:transform .25s;flex-shrink:0}
+.faq-a{font-size:14px;color:#000;line-height:1.7;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s;background:#e8e2d6;padding-left:24px;padding-right:24px}
+.faq-item.open .faq-a{max-height:200px;padding:0 24px 18px}
+.faq-item.open .arr{transform:rotate(45deg)}
+
+/* CONTATO / CADASTRO */
+.contact-sec{background:var(--ocean);padding:64px 40px;text-align:center}
+.contact-sec h2{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,40px);font-weight:900;color:#fff;margin-bottom:10px}
+.contact-sec p.sub{color:rgba(255,255,255,.65);font-size:15px;margin-bottom:34px}
+.cform{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:32px;max-width:500px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.cform input,.cform select{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:12px 16px;color:#fff;font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
+.cform select option{color:var(--ink);background:#fff}
+.cform input::placeholder{color:rgba(255,255,255,.4)}
+.cform input:focus,.cform select:focus{border-color:var(--gold)}
+.cform .btn-send{background:var(--gold);color:var(--green-deep);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;letter-spacing:.08em;padding:14px;border:none;border-radius:4px;cursor:pointer;transition:opacity .2s}
+.cform .btn-send:hover{opacity:.88}
+.cform .btn-send:disabled{opacity:.5;cursor:default}
+.msg-erro{background:rgba(220,60,60,.2);border:1px solid rgba(220,60,60,.5);color:#ffaaaa;border-radius:4px;padding:12px 16px;font-size:13px;text-align:left;display:none}
+.msg-ok{background:rgba(26,122,82,.25);border:1px solid rgba(26,122,82,.5);color:#aaffcc;border-radius:4px;padding:12px 16px;font-size:13px;text-align:left;display:none}
+.codigo-wrap{display:none;flex-direction:column;gap:14px}
+.codigo-hint{font-size:13px;color:rgba(255,255,255,.7);text-align:left}
+.codigo-hint span{color:var(--gold);font-weight:600}
+
+/* PAINEL DEV */
+.dev-panel{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;overflow-y:auto;padding:40px 20px}
+.dev-inner{background:#0d1117;border:1px solid #30363d;border-radius:10px;max-width:700px;margin:0 auto;padding:32px;color:#c9d1d9;font-family:'IBM Plex Mono',monospace}
+.dev-inner h2{color:#58a6ff;font-size:20px;margin-bottom:6px;font-family:'IBM Plex Mono',monospace;font-weight:500}
+.dev-inner .dev-sub{font-size:12px;color:#8b949e;margin-bottom:24px}
+.dev-close{float:right;background:#21262d;border:1px solid #30363d;color:#c9d1d9;padding:6px 14px;border-radius:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px}
+.dev-close:hover{background:#30363d}
+.dev-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.dev-table th{text-align:left;padding:8px 12px;border-bottom:1px solid #30363d;color:#8b949e;font-weight:400}
+.dev-table td{padding:10px 12px;border-bottom:1px solid #21262d;color:#c9d1d9}
+.dev-table tr:last-child td{border-bottom:none}
+.dev-table td.num{color:#79c0ff;font-weight:500}
+.dev-table td.plano-tag{color:#a5d6a7}
+.dev-table td.novo{color:#f9826c}
+.dev-empty{text-align:center;padding:32px;color:#8b949e;font-size:13px}
+.dev-badge-novo{background:#f9826c22;border:1px solid #f9826c44;color:#f9826c;font-size:10px;padding:2px 8px;border-radius:2px;margin-left:8px}
+.notif-toast{position:fixed;bottom:24px;right:24px;background:#1f6feb;border:1px solid #388bfd;color:#fff;padding:14px 20px;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-size:13px;z-index:99999;max-width:300px;box-shadow:0 8px 24px rgba(0,0,0,.4);transform:translateY(80px);opacity:0;transition:all .4s ease}
+.notif-toast.show{transform:translateY(0);opacity:1}
+
+.footer-line{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(255,255,255,.35);padding:16px 40px 8px;background:var(--green-deep);letter-spacing:.1em}
+.footer-names{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(255,255,255,.55);padding:0 40px 28px;background:var(--green-deep);letter-spacing:.08em}
+
+@media(max-width:620px){
+  .como-grid,.planos-grid,.pub-grid{grid-template-columns:1fr}
+  .section,.planos-sec,.contact-sec{padding:48px 20px}
+  .hero{padding:60px 20px 48px}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.hero>*{animation:fadeUp .6s ease both}
+.globe-wrap{animation-delay:0s}.badge{animation-delay:.1s}.hero h1{animation-delay:.2s}
+.slogan{animation-delay:.28s}.sub-slogan{animation-delay:.34s}.cta-group{animation-delay:.44s}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="globe-wrap">
+    <svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="45" cy="45" r="42" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
+      <ellipse cx="45" cy="45" rx="20" ry="42" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
+      <line x1="3" y1="45" x2="87" y2="45" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
+      <line x1="9" y1="28" x2="81" y2="28" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+      <line x1="9" y1="62" x2="81" y2="62" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+      <circle cx="45" cy="45" r="42" stroke="rgba(196,154,42,.5)" stroke-width="1.5" fill="none" stroke-dasharray="8 4" transform="rotate(-30 45 45)"/>
+      <path d="M28 35 Q35 30 38 38 Q42 46 36 50 Q30 53 28 45 Z" fill="rgba(26,122,82,.7)"/>
+      <path d="M48 28 Q58 25 62 35 Q66 44 58 48 Q50 51 47 42 Z" fill="rgba(26,122,82,.7)"/>
+      <path d="M52 54 Q60 52 63 60 Q65 67 57 68 Q50 69 50 62 Z" fill="rgba(26,122,82,.5)"/>
+      <circle cx="45" cy="45" r="3.5" fill="var(--gold)" opacity=".9"/>
+    </svg>
+  </div>
+  <div class="badge">PLATAFORMA EDUCACIONAL</div>
+  <h1>Geo<span>Mundo</span></h1>
+  <p class="slogan">Explorar o mundo é a maior aventura da educação.</p>
+  <p class="sub-slogan">Assinatura de geografia interativa para estudantes, professores e escolas</p>
+  <div class="cta-group">
+    <a href="#planos" class="btn-gold">Ver planos e preços</a>
+    <a href="#como-funciona" class="btn-ghost">Como funciona ↓</a>
+  </div>
+</section>
+
+<div class="faixa"></div>
+
+<div class="section" id="como-funciona">
+  <div class="label">A plataforma</div>
+  <h2>Geografia que sai do livro e entra na tela</h2>
+  <div class="como-grid">
+    <div class="como-card"><span class="ic">🗺️</span><h3>Mapas interativos</h3><p>Explore o planeta em tempo real. Clique em países, regiões e biomas e descubra dados, curiosidades e informações aprofundadas.</p></div>
+    <div class="como-card"><span class="ic">🎯</span><h3>Quizzes e desafios</h3><p>Aprenda jogando. Trilhas temáticas com pontuação, ranking e medalhas que tornam o estudo uma competição saudável.</p></div>
+    <div class="como-card"><span class="ic">📊</span><h3>Acompanhamento real</h3><p>Professores e escolas monitoram o progresso de cada aluno com relatórios detalhados e indicadores de desempenho.</p></div>
+  </div>
+</div>
+
+<div class="section" style="padding-top:0">
+  <div class="label">Para quem é</div>
+  <h2>Uma assinatura, três perfis de uso</h2>
+  <div class="pub-grid">
+    <div class="pub-card"><div class="pub-icon">🎒</div><h3>Estudantes</h3><p>Do fundamental ao médio. Conteúdo gamificado, trilhas de aprendizado e preparação para o ENEM.</p></div>
+    <div class="pub-card"><div class="pub-icon">👩‍🏫</div><h3>Professores</h3><p>Planos de aula prontos alinhados à BNCC, mapas para apresentação e banco de questões editáveis.</p></div>
+    <div class="pub-card"><div class="pub-icon">🏫</div><h3>Escolas</h3><p>Licença institucional com painel de gestão, múltiplos acessos e relatórios por turma.</p></div>
+  </div>
+</div>
+
+<section class="planos-sec" id="planos">
+  <div class="planos-inner">
+    <div class="label">Planos e preços</div>
+    <h2>Escolha o plano ideal para você</h2>
+    <p class="intro">Cancele quando quiser. Sem taxas escondidas. Todos os planos incluem acesso completo ao conteúdo da plataforma.</p>
+    <div class="planos-grid">
+      <div class="plano">
+        <div class="plano-icon">🎒</div><h3>Aluno</h3>
+        <div class="preco">R$ 19,90 / mês</div>
+        <div class="desc">Para estudantes que querem aprender geografia de forma interativa e autônoma.</div>
+        <ul class="plano-features"><li>Atlas interativo completo</li><li>Quizzes e jogos geográficos</li><li>Trilhas temáticas (biomas, capitais, etc.)</li><li>Modo de estudo para o ENEM</li><li>Certificados de conclusão</li></ul>
+        <div class="btn-plano" onclick="abrirCadastro('Aluno')">Começar teste grátis</div>
+      </div>
+      <div class="plano destaque">
+        <div class="popular">MAIS POPULAR</div>
+        <div class="plano-icon">👩‍🏫</div><h3>Professor</h3>
+        <div class="preco">R$ 49,90 / mês</div>
+        <div class="desc">Para educadores que querem transformar suas aulas com ferramentas modernas.</div>
+        <ul class="plano-features"><li>Tudo do plano Aluno</li><li>Planos de aula prontos por BNCC</li><li>Banco com +500 questões editáveis</li><li>Mapas interativos para apresentação</li><li>Até 40 alunos vinculados</li><li>Relatório de desempenho da turma</li></ul>
+        <div class="btn-plano" onclick="abrirCadastro('Professor')">Começar teste grátis</div>
+      </div>
+      <div class="plano">
+        <div class="plano-icon">🏫</div><h3>Escola</h3>
+        <div class="preco">Sob consulta · licença anual</div>
+        <div class="desc">Para instituições que querem elevar o ensino de geografia em toda a rede.</div>
+        <ul class="plano-features"><li>Alunos e professores ilimitados</li><li>Painel de gestão institucional</li><li>Relatórios por turma e por aluno</li><li>Integração com sistemas escolares</li><li>Onboarding e suporte dedicado</li><li>Personalização com a marca da escola</li></ul>
+        <div class="btn-plano" onclick="abrirCadastro('Escola')">Falar com a equipe</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section">
+  <div class="label">Dúvidas frequentes</div>
+  <h2>Perguntas e respostas</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Como funciona o teste gratuito?<span class="arr">+</span></button>
+      <div class="faq-a">Ao escolher um plano, pedimos seu número de telefone. Enviamos um código de verificação via WhatsApp ou SMS. Cada número tem direito a 7 dias gratuitos — um único teste por número.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Posso cancelar a assinatura a qualquer momento?<span class="arr">+</span></button>
+      <div class="faq-a">Sim. Não há fidelidade nem multa. Você cancela quando quiser pelo próprio painel, e o acesso continua até o fim do período já pago.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">O conteúdo é alinhado à BNCC?<span class="arr">+</span></button>
+      <div class="faq-a">Sim. Todo o conteúdo e os planos de aula seguem as diretrizes da Base Nacional Comum Curricular para o ensino de Geografia no fundamental e médio.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Como funciona o plano Escola?<span class="arr">+</span></button>
+      <div class="faq-a">A escola contrata uma licença anual com número ilimitado de acessos. Nossa equipe faz o onboarding, configura o painel institucional e oferece suporte contínuo.</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CADASTRO -->
+<div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center;padding:20px">
+  <div style="background:var(--green-deep);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:36px;max-width:440px;width:100%;position:relative">
+    <button onclick="fecharModal()" style="position:absolute;top:16px;right:16px;background:transparent;border:none;color:rgba(255,255,255,.5);font-size:22px;cursor:pointer;line-height:1">×</button>
+    <div id="step1">
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;color:var(--gold);margin-bottom:8px">TESTE GRATUITO · 7 DIAS</p>
+      <h3 style="font-family:'Playfair Display',serif;color:#fff;font-size:22px;margin-bottom:6px">Plano <span id="plano-nome" style="color:var(--gold)"></span></h3>
+      <p style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:24px">Digite seu número de telefone para receber o código de verificação.</p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <input id="inp-nome" type="text" placeholder="Seu nome" oninput="checkDevCode(this.value)" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:12px 16px;color:#fff;font-family:'Inter',sans-serif;font-size:14px;outline:none">
+        <input id="inp-tel" type="tel" placeholder="Telefone com DDD  ex: 47 99999-0000" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:12px 16px;color:#fff;font-family:'Inter',sans-serif;font-size:14px;outline:none">
+        <div id="msg-erro" class="msg-erro"></div>
+        <button onclick="verificarTelefone()" style="background:var(--gold);color:var(--green-deep);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;letter-spacing:.08em;padding:14px;border:none;border-radius:4px;cursor:pointer">ENVIAR CÓDIGO →</button>
+        <p style="font-size:11px;color:rgba(255,255,255,.35);text-align:center">Código enviado via WhatsApp ou SMS. Cada número tem direito a 1 teste gratuito.</p>
+      </div>
+    </div>
+    <div id="step2" style="display:none">
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;color:var(--gold);margin-bottom:8px">VERIFICAÇÃO</p>
+      <h3 style="font-family:'Playfair Display',serif;color:#fff;font-size:22px;margin-bottom:6px">Confirme seu número</h3>
+      <p id="codigo-hint" style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:24px"></p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <input id="inp-codigo" type="text" placeholder="Digite o código de 6 dígitos" maxlength="6" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:4px;padding:12px 16px;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:18px;outline:none;letter-spacing:.2em;text-align:center">
+        <div id="msg-erro2" class="msg-erro"></div>
+        <button onclick="confirmarCodigo()" style="background:var(--gold);color:var(--green-deep);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;letter-spacing:.08em;padding:14px;border:none;border-radius:4px;cursor:pointer">CONFIRMAR →</button>
+        <p id="reenviar" style="font-size:12px;color:rgba(255,255,255,.4);text-align:center;cursor:pointer" onclick="reenviarCodigo()">Reenviar código</p>
+      </div>
+    </div>
+    <div id="step3" style="display:none;text-align:center">
+      <div style="font-size:48px;margin-bottom:16px">🎉</div>
+      <h3 style="font-family:'Playfair Display',serif;color:#fff;font-size:22px;margin-bottom:10px">Acesso liberado!</h3>
+      <p style="font-size:14px;color:rgba(255,255,255,.65);margin-bottom:24px">Seu teste gratuito de 7 dias do plano <span id="plano-ok" style="color:var(--gold);font-weight:600"></span> foi ativado.</p>
+      <button onclick="fecharModal()" style="background:var(--gold);color:var(--green-deep);font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;letter-spacing:.08em;padding:14px 32px;border:none;border-radius:4px;cursor:pointer">COMEÇAR A EXPLORAR →</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAINEL DEV -->
+<div id="dev-panel" class="dev-panel">
+  <div class="dev-inner">
+    <button class="dev-close" onclick="fecharDev()">× Fechar</button>
+    <h2>Painel do Desenvolvedor</h2>
+    <div class="dev-sub">GeoMundo · Números registrados · Acesso restrito</div>
+    <div id="dev-conteudo"></div>
+  </div>
+</div>
+
+<!-- NOTIFICAÇÃO TOAST -->
+<div id="toast" class="notif-toast"></div>
+
+<section class="contact-sec" id="contato">
+  <h2>Pronto para explorar o mundo?</h2>
+  <p class="sub">Escolha seu plano acima ou fale com a nossa equipe.</p>
+  <div class="cform">
+    <input type="text" placeholder="Seu nome" />
+    <input type="email" placeholder="Seu e-mail" />
+    <select>
+      <option value="" disabled selected>Qual plano te interessa?</option>
+      <option>Aluno — R$ 19,90/mês</option>
+      <option>Professor — R$ 49,90/mês</option>
+      <option>Escola — licença institucional</option>
+      <option>Quero saber mais antes de decidir</option>
+    </select>
+    <input type="text" placeholder="Nome da escola ou instituição (opcional)" />
+    <button class="btn-send" onclick="this.textContent='Enviado! Entraremos em contato em breve ✓';this.disabled=true">ENTRAR EM CONTATO →</button>
+  </div>
+</section>
+
+<div class="footer-line">GEOMUNDO · PLATAFORMA EDUCACIONAL BRASILEIRA · 2026</div>
+<div class="footer-names">Arthur · Benício · João Pedro · Lucas · Rafael Leal</div>
+
+<script>
+const DEV_CODE = '151413JP';
+let planoAtual = '';
+let codigoGerado = '';
+let registros = [];
+
+try {
+  const saved = localStorage.getItem('gm_registros');
+  if (saved) registros = JSON.parse(saved);
+} catch(e) { registros = []; }
+
+function salvar() {
+  try { localStorage.setItem('gm_registros', JSON.stringify(registros)); } catch(e){}
+}
+
+function abrirCadastro(plano) {
+  planoAtual = plano;
+  document.getElementById('plano-nome').textContent = plano;
+  document.getElementById('plano-ok').textContent = plano;
+  document.getElementById('step1').style.display = 'block';
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('step3').style.display = 'none';
+  document.getElementById('inp-nome').value = '';
+  document.getElementById('inp-tel').value = '';
+  document.getElementById('msg-erro').style.display = 'none';
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function fecharModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+
+function checkDevCode(val) {
+  if (val.trim() === DEV_CODE) {
+    fecharModal();
+    abrirDev();
+  }
+}
+
+function verificarTelefone() {
+  const nome = document.getElementById('inp-nome').value.trim();
+  const tel = document.getElementById('inp-tel').value.trim().replace(/\D/g,'');
+  const err = document.getElementById('msg-erro');
+
+  if (!nome) { mostrarErro(err, 'Por favor, informe seu nome.'); return; }
+  if (tel.length < 10) { mostrarErro(err, 'Digite um número de telefone válido com DDD.'); return; }
+
+  const jaUsou = registros.find(r => r.tel === tel);
+  if (jaUsou) {
+    mostrarErro(err, `Este número já utilizou o teste gratuito em ${jaUsou.data}. Para continuar, assine um plano.`);
+    return;
+  }
+
+  err.style.display = 'none';
+  codigoGerado = Math.floor(100000 + Math.random() * 900000).toString();
+  document.getElementById('step1').style.display = 'none';
+  document.getElementById('step2').style.display = 'block';
+  document.getElementById('codigo-hint').innerHTML = `Enviamos o código para <strong style="color:var(--gold)">+55 ${tel}</strong> via WhatsApp ou SMS.`;
+  document.getElementById('inp-codigo').value = '';
+  document.getElementById('msg-erro2').style.display = 'none';
+
+  // Simula envio — em produção aqui chamaria a API do WhatsApp/SMS
+  console.log('[GeoMundo DEV] Código gerado:', codigoGerado, '| Tel:', tel);
+  mostrarToast(`Código enviado para +55 ${tel}`);
+}
+
+function confirmarCodigo() {
+  const codigo = document.getElementById('inp-codigo').value.trim();
+  const err = document.getElementById('msg-erro2');
+  const tel = document.getElementById('inp-tel').value.trim().replace(/\D/g,'');
+  const nome = document.getElementById('inp-nome').value.trim();
+
+  if (codigo !== codigoGerado) {
+    mostrarErro(err, 'Código incorreto. Verifique e tente novamente.');
+    return;
+  }
+
+  err.style.display = 'none';
+  const agora = new Date().toLocaleDateString('pt-BR');
+  const hora = new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+  const reg = { nome, tel, plano: planoAtual, data: agora, hora, novo: true };
+  registros.push(reg);
+  salvar();
+
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('step3').style.display = 'block';
+
+  // Notificação para os devs
+  mostrarToast(`Novo registro: ${nome} (${planoAtual}) · +55 ${tel}`);
+}
+
+function reenviarCodigo() {
+  const tel = document.getElementById('inp-tel').value.trim().replace(/\D/g,'');
+  codigoGerado = Math.floor(100000 + Math.random() * 900000).toString();
+  console.log('[GeoMundo DEV] Código reenviado:', codigoGerado);
+  mostrarToast(`Código reenviado para +55 ${tel}`);
+}
+
+function mostrarErro(el, msg) {
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function mostrarToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = '🔔 ' + msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+function abrirDev() {
+  const painel = document.getElementById('dev-panel');
+  painel.style.display = 'block';
+  renderDev();
+}
+
+function fecharDev() {
+  document.getElementById('dev-panel').style.display = 'none';
+  // Marca todos como não-novo após ver
+  registros = registros.map(r => ({...r, novo: false}));
+  salvar();
+}
+
+function renderDev() {
+  const cont = document.getElementById('dev-conteudo');
+  if (!registros.length) {
+    cont.innerHTML = '<div class="dev-empty">Nenhum número registrado ainda.</div>';
+    return;
+  }
+  let html = `<table class="dev-table">
+    <thead><tr>
+      <th>#</th><th>Nome</th><th>Telefone</th><th>Plano</th><th>Data</th><th>Hora</th>
+    </tr></thead><tbody>`;
+  registros.forEach((r, i) => {
+    const novoBadge = r.novo ? '<span class="dev-badge-novo">NOVO</span>' : '';
+    html += `<tr>
+      <td style="color:#8b949e">${i+1}</td>
+      <td>${r.nome}${novoBadge}</td>
+      <td class="num">+55 ${r.tel}</td>
+      <td class="plano-tag">${r.plano}</td>
+      <td>${r.data}</td>
+      <td>${r.hora}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  html += `<div style="margin-top:20px;padding-top:16px;border-top:1px solid #30363d;font-size:12px;color:#8b949e">
+    Total registrado: <span style="color:#79c0ff">${registros.length}</span> número(s) · 
+    <span style="cursor:pointer;color:#f9826c" onclick="limparDev()">Limpar registros</span>
+  </div>`;
+  cont.innerHTML = html;
+}
+
+function limparDev() {
+  if (confirm('Apagar todos os registros?')) {
+    registros = [];
+    salvar();
+    renderDev();
+  }
+}
+
+// Fechar modal clicando fora
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) fecharModal();
+});
+</script>
+</body>
+</html>
